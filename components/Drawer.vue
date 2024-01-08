@@ -5,26 +5,26 @@
     </transition>
     <transition name="slide">
       <div v-if="mail" class="drawer-content">
-        <div class="drawer-content-action-container">
-          <div class="drawer-content-left-actions">
-            <div class="drawer-content-action" @click="handleCloseDrawer">
+        <div class="drawer-content__action-container">
+          <div class="drawer-content__left-actions">
+            <div class="drawer-content__action" @click="handleCloseDrawer">
               <img src="/assets/images/close.svg" alt="close" />
               <span>Close (Esc)</span>
             </div>
           </div>
-          <div class="drawer-content-right-actions">
-            <div class="drawer-content-action" @click="updateMailStatus('markRead')">
+          <div class="drawer-content__right-actions">
+            <div class="drawer-content__action" @click="updateMailStatus('markRead')">
               <img src="/assets/images/read.svg" alt="close" />
               <span>Mark as read (r)</span>
             </div>
-            <div class="drawer-content-action" @click="updateMailStatus('markArchive')">
+            <div class="drawer-content__action" @click="updateMailStatus('markArchive')">
               <img src="/assets/images/delete.svg" alt="close" />
               <span>Archive (a)</span>
             </div>
           </div>
         </div>
-        <div class="drawer-content-heading">{{ mail.subject }}</div>
-        <div class="drawer-content-text">{{ mail.body }}</div>
+        <div class="drawer-content__heading">{{ mail.subject }}</div>
+        <div class="drawer-content__text">{{ mail.body }}</div>
       </div>
     </transition>
   </div>
@@ -65,7 +65,7 @@ watch(() => props.mail, (newVal, oldVal) => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -108,7 +108,7 @@ watch(() => props.mail, (newVal, oldVal) => {
   padding: 32px;
 }
 
-.drawer-content-action-container {
+.drawer-content__action-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,28 +118,28 @@ watch(() => props.mail, (newVal, oldVal) => {
   margin-bottom: 32px;
 }
 
-.drawer-content-left-actions,
-.drawer-content-right-actions {
+.drawer-content__left-actions,
+.drawer-content__right-actions {
   display: flex;
   align-items: center;
   gap: 40px;
 }
 
-.drawer-content-action {
+.drawer-content__action {
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.drawer-content-heading {
+.drawer-content__heading {
   color: #121829;
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 20px;
 }
 
-.drawer-content-text {
+.drawer-content__text {
   color: #4b5563;
   font-size: 14px;
   font-weight: 500;

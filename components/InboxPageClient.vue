@@ -1,97 +1,100 @@
 <template>
-    <div class="page-wrapper">
-      <Drawer
-        :mail="mailToShow"
-        @markRead="(ids) => updateMailStatus('markRead', ids)"
-        @markArchive="(ids) => updateMailStatus('markArchive', ids)"
-        @closeDrawer="handleCloseDrawer"
-      />
-      <div class="page-header">
-        <PageHeading>Inbox</PageHeading>
-        <MailActions
-          :checked="checkedItems.length === mails.length"
-          :isIndeterminate="!!(checkedItems.length && checkedItems.length !== mails.length)"
-          :count="checkedItems.length"
-          @toggleCheckbox="handleToggleAllCheckbox"
-          @markRead="() => updateMailStatus('markRead', checkedItems)"
-          @markArchive="() => updateMailStatus('markArchive', checkedItems)"
-        />
-      </div>
-      <MailItem
-        v-for="mail in mails"
-        :key="mail.id"
-        :mail="mail"
-        :checked="checkedItems.includes(mail.id)"
-        @click="handleEmailItemClick(mail)"
-        @toggleCheckbox="handleToggleCheckbox"
+  <div class="page-wrapper">
+    <Drawer
+      :mail="mailToShow"
+      @markRead="(ids) => updateMailStatus('markRead', ids)"
+      @markArchive="(ids) => updateMailStatus('markArchive', ids)"
+      @closeDrawer="handleCloseDrawer"
+    />
+    <div class="page-header">
+      <PageHeading>Inbox</PageHeading>
+      <MailActions
+        :checked="isChecked"
+        :isIndeterminate="isIndeterminate"
+        :count="checkedItems.length"
+        @toggleCheckbox="handleToggleAllCheckbox"
+        @markRead="() => updateMailStatus('markRead', checkedItems)"
+        @markArchive="() => updateMailStatus('markArchive', checkedItems)"
       />
     </div>
-  </template>
-  
-  <script setup>
-  import { useMailStore } from '../composables/useMailStore';
-  import { useKeyboardEvents } from '../composables/useKeyboardEvents';
-  
-  const keyboardEvents = {
-    r: () => updateMailStatus('markRead', checkedItems.value),
-    a: () => updateMailStatus('markArchive', checkedItems.value),
-  };
-  
-  const { addListener, removeListener } = useKeyboardEvents(keyboardEvents);
-  
-  const checkedItems = ref([]);
-  const props = defineProps({
-    mails: {
-      type: Array,
-      required: true,
-    },
-  });
-  const emit = defineEmits(['markRead', 'markArchive']);
-  
-  const handleToggleCheckbox = (mailId) => {
-    if (checkedItems.value.includes(mailId)) {
-      checkedItems.value = checkedItems.value.filter((id) => id !== mailId);
-    } else {
-      checkedItems.value.push(mailId);
-    }
-  };
-  
-  const mailToShow = ref(null);
-  
-  const { markEmailsAsRead } = useMailStore();
-  
-  const handleEmailItemClick = (mail) => {
-    mailToShow.value = mail;
-  };
-  
-  const handleCloseDrawer = () => {
-    mailToShow.value = null;
-  };
-  
-  const updateMailStatus = (markAs, ids) => {
-    emit(markAs, ids);
-    handleCloseDrawer();
-  };
-  
-  const handleToggleAllCheckbox = (isChecked) => {
-    checkedItems.value = isChecked ? props.mails.map((mail) => mail.id) : [];
-  };
-  
-  watch(() => mailToShow.value, (newVal, oldVal) => {
-    newVal ? removeListener() : addListener();
-  });
-  </script>
-  
-  <style lang="scss">
-  .page-wrapper {
-    width: 100%;
-    height: 100%;
+    <MailItem
+      v-for="mail in mails"
+      :key="mail.id"
+      :mail="mail"
+      :checked="checkedItems.includes(mail.id)"
+      @click="handleEmailItemClick(mail)"
+      @toggleCheckbox="handleToggleCheckbox"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, watch, defineProps, defineEmits } from 'vue';
+import { useMailStore } from '../composables/useMailStore';
+import { useKeyboardEvents } from '../composables/useKeyboardEvents';
+
+const props = defineProps({
+  mails: {
+    type: Array,
+    required: true,
+  },
+});
+
+const emit = defineEmits(['markRead', 'markArchive']);
+
+const checkedItems = ref([]);
+const mailToShow = ref(null);
+const { markEmailsAsRead } = useMailStore();
+
+const isChecked = computed(() => checkedItems.value.length === props.mails.length);
+const isIndeterminate = computed(() => !isChecked.value && checkedItems.value.length > 0);
+
+const handleToggleCheckbox = (mailId) => {
+  if (checkedItems.value.includes(mailId)) {
+    checkedItems.value = checkedItems.value.filter((id) => id !== mailId);
+  } else {
+    checkedItems.value.push(mailId);
   }
-  
-  .page-header {
-    position: sticky;
-    top: 0;
-    background-color: #ffffff;
-  }
-  </style>
-  
+};
+
+const handleCloseDrawer = () => {
+  mailToShow.value = null;
+};
+
+const updateMailStatus = (markAs, ids) => {
+  emit(markAs, ids);
+  handleCloseDrawer();
+};
+
+const handleToggleAllCheckbox = (isChecked) => {
+  checkedItems.value = isChecked ? props.mails.map((mail) => mail.id) : [];
+};
+
+watch(() => mailToShow.value, (newVal, oldVal) => {
+  newVal ? removeListener() : addListener();
+});
+
+const handleEmailItemClick = (mail) => {
+  mailToShow.value = mail;
+};
+
+const keyboardEvents = {
+  r: () => updateMailStatus('markRead', checkedItems.value),
+  a: () => updateMailStatus('markArchive', checkedItems.value),
+};
+
+const { addListener, removeListener } = useKeyboardEvents(keyboardEvents);
+</script>
+
+<style lang="scss" scoped>
+.page-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.page-header {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+}
+</style>

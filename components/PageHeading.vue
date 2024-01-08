@@ -4,7 +4,10 @@
   </div>
 </template>
 
-<style lang="scss">
+<script setup>
+</script>
+
+<style scoped>
 .page-heading {
   color: #121829;
   font-size: 32px;
