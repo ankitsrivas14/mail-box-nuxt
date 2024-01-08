@@ -1,6 +1,6 @@
 <template>
     <PageClient 
-        title="Inbox"
+        title="Archive"
         :mails="mails"
         @markRead="markEmailsAsRead"
         @markArchive="markEmailsAsArchive"

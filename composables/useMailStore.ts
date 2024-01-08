@@ -41,6 +41,10 @@ export function useMailStore() {
     return mails.value.filter((mail) => !mail.isArchived);
   });
 
+  const mailsForArchive = computed(() => {
+    return mails.value.filter((mail) => mail.isArchived);
+  });
+
   const totalMailsInInbox = computed(() => {
     return mails.value.filter((mail) => !mail.isArchived).length;
   });
@@ -76,5 +80,6 @@ export function useMailStore() {
     markEmailsAsArchive,
     mailsForInbox,
     totalMailsInInbox,
+    mailsForArchive,
   };
 }

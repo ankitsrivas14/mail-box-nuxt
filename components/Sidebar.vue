@@ -8,14 +8,14 @@
             <img src="@/assets/images/inbox.svg" alt="inbox" />
             <span>Inbox</span>
           </div>
-          <span>{{ totalMailsInInbox }}</span>
+          <span>{{ inboxCount }}</span>
         </NuxtLink>
         <NuxtLink class="sidebar__link" to="/archive">
           <div class="sidebar__link-text">
             <img src="@/assets/images/archive.svg" alt="archive" />
             <span>Archive</span>
           </div>
-          <span>8</span>
+          <span>{{ archiveCount }}</span>
         </NuxtLink>
       </div>
     </div>
@@ -31,6 +31,18 @@
 </template>
 
 <script setup>
+
+const props = defineProps({
+  inboxCount: {
+    type: Number,
+    required: true,
+  },
+  archiveCount: {
+    type: Number,
+    required: true,
+  },
+});
+
 </script>
 
 <style lang="scss" scoped>

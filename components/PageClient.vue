@@ -7,7 +7,7 @@
       @closeDrawer="handleCloseDrawer"
     />
     <div class="page-header">
-      <PageHeading>Inbox</PageHeading>
+      <PageHeading>{{ title }}</PageHeading>
       <MailActions
         :checked="isChecked"
         :isIndeterminate="isIndeterminate"
@@ -38,6 +38,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
 });
 
 const emit = defineEmits(['markRead', 'markArchive']);
@@ -46,7 +50,7 @@ const checkedItems = ref([]);
 const mailToShow = ref(null);
 const { markEmailsAsRead } = useMailStore();
 
-const isChecked = computed(() => checkedItems.value.length === props.mails.length);
+const isChecked = computed(() => (checkedItems.value.length === props.mails.length) && checkedItems.value.length > 0);
 const isIndeterminate = computed(() => !isChecked.value && checkedItems.value.length > 0);
 
 const handleToggleCheckbox = (mailId) => {
@@ -64,6 +68,7 @@ const handleCloseDrawer = () => {
 const updateMailStatus = (markAs, ids) => {
   emit(markAs, ids);
   handleCloseDrawer();
+  checkedItems.value = [];
 };
 
 const handleToggleAllCheckbox = (isChecked) => {
