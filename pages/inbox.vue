@@ -1,33 +1,21 @@
 <template>
-    <div class="page_wrapper">
-        <div class="page-header">
-            <PageHeading>Inbox</PageHeading>
-            <MailActions />
-        </div>
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-        <MailItem />
-    </div>
+    <InboxPageClient 
+        :mails="mailsForInbox"
+        @markRead="markEmailsAsRead" 
+        @markArchive="markEmailsAsArchive" 
+    />
 </template>
-<style lang="scss">
-.page_wrapper{
-    width: 100%;
-    height: 100%;
-    .page-header{
-        position: sticky;
-        top: 0;
-        background-color: #FFFFFF;
-    }
-}
-</style>
-  
+<script setup>
+
+import { useMailStore } from '../composables/useMailStore';
+
+const { 
+    fetchMails, 
+    markEmailsAsRead,
+    markEmailsAsArchive,
+    mailsForInbox,
+} = useMailStore();
+
+await fetchMails();
+
+</script>

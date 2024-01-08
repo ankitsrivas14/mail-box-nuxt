@@ -8,7 +8,7 @@
                         <img src="../assets/images/inbox.svg" alt="inbox" />
                         <span>Inbox</span>
                     </div>
-                    <span>12</span>
+                    <span>{{ totalMailsInInbox }}</span>
                 </NuxtLink>
                 <NuxtLink class="sidebar_link" to="/archive">
                     <div class="sidebar_link-text">
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+
 </script>
 
 <style lang="scss">

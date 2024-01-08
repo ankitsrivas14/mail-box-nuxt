@@ -2,7 +2,6 @@
   <div class="wrapper">
     <Sidebar />
     <NuxtPage class="app-page_container"/>
-    <Drawer />
   </div>
 </template>
 
