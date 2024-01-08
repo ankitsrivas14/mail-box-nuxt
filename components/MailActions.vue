@@ -11,8 +11,18 @@
         <span class="mail-actions-text__label">Email Selected ({{ count }})</span>
       </div>
       <div class="mail-actions-buttons">
-        <span class="mail-actions-buttons__button">Mark as read (r)</span>
-        <span class="mail-actions-buttons__button">Archive (a)</span>
+        <span 
+          class="mail-actions-buttons__button" 
+          @click="updateMailStatus('markRead')"
+        >
+          Mark as read (r)
+        </span>
+        <span 
+          class="mail-actions-buttons__button" 
+          @click="updateMailStatus('markArchive')"
+        >
+          Archive (a)
+        </span>
       </div>
     </div>
   </template>
@@ -33,11 +43,15 @@
     },
   });
   
-  const emit = defineEmits(['toggleCheckbox']);
+  const emit = defineEmits(['toggleCheckbox', 'markRead', 'markArchive']);
   
   const toggleCheckbox = (e) => {
     emit('toggleCheckbox', e.target.checked);
   };
+
+  const updateMailStatus = (markAs) => {
+    emit(markAs);
+};
   </script>
   
   <style lang="scss">

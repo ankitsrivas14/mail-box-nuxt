@@ -13,6 +13,8 @@
           :isIndeterminate="!!(checkedItems.length && checkedItems.length !== mails.length)"
           :count="checkedItems.length"
           @toggleCheckbox="handleToggleAllCheckbox"
+          @markRead="() => updateMailStatus('markRead', checkedItems)"
+          @markArchive="() => updateMailStatus('markArchive', checkedItems)"
         />
       </div>
       <MailItem
