@@ -1,39 +1,35 @@
 <template>
-    <div>
-      <transition name="fade">
-        <div v-if="mail" class="drawer-overlay" @click="handleCloseDrawer"></div>
-      </transition>
-      <transition name="slide">
-        <div v-if="mail" class="drawer-content">
-            <div class="drawer-content_action-conatiner">
-                <div class="drawer-content_left-actions">
-                    <div class="drawer-content_action" @click="handleCloseDrawer">
-                        <img src="/assets/images/close.svg" alt="close"  />
-                        <span>Close (Esc)</span>
-                    </div>
-                </div>
-                <div class="drawer-content_right-actions">
-                    <div class="drawer-content_action" @click="updateMailStatus('markRead')">
-                        <img src="/assets/images/read.svg" alt="close"  />
-                        <span>Mark as read (r)</span>
-                    </div>
-                    <div class="drawer-content_action" @click="updateMailStatus('markArchive')">
-                        <img src="/assets/images/delete.svg" alt="close"  />
-                        <span>Archive (a)</span>
-                    </div>
-                </div>
+  <div>
+    <transition name="fade">
+      <div v-if="mail" class="drawer-overlay" @click="handleCloseDrawer"></div>
+    </transition>
+    <transition name="slide">
+      <div v-if="mail" class="drawer-content">
+        <div class="drawer-content-action-container">
+          <div class="drawer-content-left-actions">
+            <div class="drawer-content-action" @click="handleCloseDrawer">
+              <img src="/assets/images/close.svg" alt="close" />
+              <span>Close (Esc)</span>
             </div>
-            <div class="drawer-content_heading">
-                {{ mail.subject }}
+          </div>
+          <div class="drawer-content-right-actions">
+            <div class="drawer-content-action" @click="updateMailStatus('markRead')">
+              <img src="/assets/images/read.svg" alt="close" />
+              <span>Mark as read (r)</span>
             </div>
-            <div class="drawer-content_text">
-                {{ mail.body }}
+            <div class="drawer-content-action" @click="updateMailStatus('markArchive')">
+              <img src="/assets/images/delete.svg" alt="close" />
+              <span>Archive (a)</span>
             </div>
+          </div>
         </div>
-      </transition>
-    </div>
-  </template>
-  
+        <div class="drawer-content-heading">{{ mail.subject }}</div>
+        <div class="drawer-content-text">{{ mail.body }}</div>
+      </div>
+    </transition>
+  </div>
+</template>
+
 <script setup>
 import { useKeyboardEvents } from '../composables/useKeyboardEvents';
 import { ref, defineProps, defineEmits, watch, onMounted, onUnmounted } from 'vue';
@@ -51,7 +47,6 @@ const handleCloseDrawer = () => {
   emit('closeDrawer');
 };
 
-
 const updateMailStatus = (markAs) => {
   if (props.mail?.id) {
     emit(markAs, [props.mail.id]);
@@ -63,15 +58,13 @@ const keyboardEvents = {
   r: () => updateMailStatus('markRead'),
   a: () => updateMailStatus('markArchive'),
 };
-const { handleKeyPress, addListner, removeListner } = useKeyboardEvents(keyboardEvents);
+const { handleKeyPress, addListener, removeListener } = useKeyboardEvents(keyboardEvents);
 
 watch(() => props.mail, (newVal, oldVal) => {
-  !newVal ? removeListner() : addListner();
+  !newVal ? removeListener() : addListener();
 });
-
 </script>
 
-  
 <style lang="scss">
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -89,9 +82,9 @@ watch(() => props.mail, (newVal, oldVal) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #4C5764;
+  background-color: #4c5764;
   opacity: 0.8;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .slide-enter-active, .slide-leave-active {
@@ -103,47 +96,52 @@ watch(() => props.mail, (newVal, oldVal) => {
 .slide-enter-to, .slide-leave-from {
   transform: translateX(0);
 }
-  
+
 .drawer-content {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 60%;
-    height: 100%;
-    background-color: white; 
-    z-index: 1000;
-    padding: 32px;
-    .drawer-content_action-conatiner{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #4B5563;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 32px;
-        .drawer-content_right-actions{
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-        .drawer-content_action{
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-    }
-    .drawer-content_heading{
-        color: #121829;
-        font-size: 20px;
-        font-weight: 500;
-        margin-bottom: 20px;
-    }
-    .drawer-content_text{
-        color: #4B5563;
-        font-size: 14px;
-        font-weight: 500;
-    }
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  background-color: white;
+  z-index: 1000;
+  padding: 32px;
 }
-  </style>
-  
+
+.drawer-content-action-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.drawer-content-left-actions,
+.drawer-content-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.drawer-content-action {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drawer-content-heading {
+  color: #121829;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.drawer-content-text {
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+}
+</style>

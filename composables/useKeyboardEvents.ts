@@ -12,20 +12,20 @@ export function useKeyboardEvents(events: KeyboardEvents) {
     }
   };
 
-  const addListner = () => window.addEventListener('keydown', handleKeyPress);
-  const removeListner = () => window.removeEventListener('keydown', handleKeyPress);
+  const addListener = () => window.addEventListener('keydown', handleKeyPress);
+  const removeListener = () => window.removeEventListener('keydown', handleKeyPress);
 
   onMounted(() => {
-    addListner();
+    addListener();
   });
 
   onUnmounted(() => {
-    removeListner();
+    removeListener();
   });
 
   return {
     handleKeyPress,
-    addListner,
-    removeListner
+    addListener,
+    removeListener
   }
 }
