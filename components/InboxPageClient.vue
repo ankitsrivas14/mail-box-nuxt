@@ -27,16 +27,22 @@
 </template>
 <script setup>
 import { useMailStore } from '../composables/useMailStore';
+import { useKeyboardEvents } from '../composables/useKeyboardEvents';
+
+const keyboardEvents = {
+  r: () => updateMailStatus('markRead', checkedItems.value),
+  a: () => updateMailStatus('markArchive', checkedItems.value)
+};
+
+const {addListner, removeListner} = useKeyboardEvents(keyboardEvents);
 
 const checkedItems = ref([]);
-
 const props = defineProps({
     mails: {
         type: Array,
         required: true
     }
 });
-
 const emit = defineEmits(['markRead', 'markArchive']);
 
 const handleToggleCheckbox = (mailId) => {
@@ -67,6 +73,10 @@ const updateMailStatus = (markAs, ids) => {
 const handleToggleAllCheckbox = (isChecked) => {
     checkedItems.value = isChecked ? props.mails.map(mail => mail.id) : [];
 };
+
+watch(() => mailToShow.value, (newVal, oldVal) => {
+  newVal ? removeListner() : addListner();
+});
   
 </script>
 

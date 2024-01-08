@@ -35,7 +35,7 @@
   </template>
   
 <script setup>
-
+import { useKeyboardEvents } from '../composables/useKeyboardEvents';
 import { ref, defineProps, defineEmits, watch, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
@@ -51,39 +51,22 @@ const handleCloseDrawer = () => {
   emit('closeDrawer');
 };
 
+
 const updateMailStatus = (markAs) => {
   if (props.mail?.id) {
     emit(markAs, [props.mail.id]);
   }
 };
 
-const handleKeyPress = (event) => {
-  const key = event.key.toLowerCase();
-  switch (key) {
-    case 'r':
-      updateMailStatus('markRead');
-      break;
-    case 'a':
-      updateMailStatus('markArchive');
-      break;
-    case 'escape':
-      handleCloseDrawer();
-      break;
-    default:
-      break;
-  }
+const keyboardEvents = {
+  escape: handleCloseDrawer,
+  r: () => updateMailStatus('markRead'),
+  a: () => updateMailStatus('markArchive'),
 };
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyPress);
-});
+const { handleKeyPress, addListner, removeListner } = useKeyboardEvents(keyboardEvents);
 
 watch(() => props.mail, (newVal, oldVal) => {
-  if (!newVal) {
-    window.removeEventListener('keydown', handleKeyPress);
-  } else {
-    window.addEventListener('keydown', handleKeyPress);
-  }
+  !newVal ? removeListner() : addListner();
 });
 
 </script>
