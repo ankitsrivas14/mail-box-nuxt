@@ -56,9 +56,9 @@ const props = defineProps({
   top: 0;
   left: 0;
   height: 100%;
-  background: #FFFFFF;
-  border-right: 1px solid #E6E7EB;
-  background: #F9FAFC;
+  background: var(--white);
+  border-right: 1px solid var(--border-color);
+  background: var(--light-gray);
 }
 
 .sidebar__logo {
@@ -73,7 +73,7 @@ const props = defineProps({
 }
 
 .sidebar__link {
-  color: #4B5563;
+  color: var(--dark-gray);
   font-weight: 500;
   word-wrap: break-word;
   font-size: 16px;
@@ -88,8 +88,8 @@ const props = defineProps({
 
   &:hover,
   &.router-link-active {
-    background: #D6E2FB;
-    color: #121829;
+    background: var(--primary-light);
+    color: var(--dark);
   }
 }
 

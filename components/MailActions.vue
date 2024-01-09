@@ -62,7 +62,7 @@
     padding: 0 24px 24px;
     font-weight: 500;
     font-size: 14px;
-    border-bottom: 1px solid #e6e7eb;
+    border-bottom: 1px solid var(--border-color);
   }
   
   .mail-actions-text {

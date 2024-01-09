@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     padding: 24px;
-    border-bottom: 1px solid #E6E7EB;
+    border-bottom: 1px solid var(--border-color);
     gap: 12px;
     font-weight: 500;
     font-size: 14px;
@@ -39,11 +39,11 @@
     transition: background 0.3s ease;
   
     &:hover {
-      background: #d1e2ff;
+      background: var(--primary-dark);
     }
   
     &.mail-read {
-      background: #f3f6fb;
+      background: var(--primary-medium);
     }
   }
   </style>

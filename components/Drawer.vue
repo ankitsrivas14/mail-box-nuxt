@@ -82,7 +82,7 @@ watch(() => props.mail, (newVal, oldVal) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #4c5764;
+  background-color: var(--overlay);
   opacity: 0.8;
   z-index: 999;
 }
@@ -112,7 +112,7 @@ watch(() => props.mail, (newVal, oldVal) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #4b5563;
+  color: var(--dark-gray);
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 32px;
@@ -133,14 +133,14 @@ watch(() => props.mail, (newVal, oldVal) => {
 }
 
 .drawer-content__heading {
-  color: #121829;
+  color: var(--dark);
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 20px;
 }
 
 .drawer-content__text {
-  color: #4b5563;
+  color: var(--dark-gray);
   font-size: 14px;
   font-weight: 500;
 }

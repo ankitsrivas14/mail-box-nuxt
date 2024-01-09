@@ -95,11 +95,12 @@ const { addListener, removeListener } = useKeyboardEvents(keyboardEvents);
 .page-wrapper {
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 .page-header {
   position: sticky;
   top: 0;
-  background-color: #ffffff;
+  background-color: var(--white);
 }
 </style>
